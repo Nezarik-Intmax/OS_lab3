@@ -21,10 +21,9 @@ namespace OS_lab3 {
 
         class Buyer {
             public static Form1 form;
-            // создаем семафор
             static Semaphore sem = new Semaphore(3, 3);
             Thread myThread;
-            int count = 3;// счетчик чтения
+            int count = 3;
             int arrive_time = 0;
             int buy_time;
 
@@ -41,18 +40,18 @@ namespace OS_lab3 {
                 while (count > 0) {
                     sem.WaitOne();
 
-                     string str = Thread.CurrentThread.Name;
-                     form.richTextBox1.Invoke(new del(() => form.richTextBox1.Text += $"{str} входит в магазин\n"));
+                    string str = Thread.CurrentThread.Name;
+                    form.richTextBox1.Invoke(new del(() => form.richTextBox1.Text += $"{str} входит в магазин\n"));
 
-                     form.richTextBox1.Invoke(new del(() => form.richTextBox1.Text += $"{str} покупает\n"));
-                     Thread.Sleep(buy_time);
+                    form.richTextBox1.Invoke(new del(() => form.richTextBox1.Text += $"{str} покупает\n"));
+                    Thread.Sleep(buy_time);
 
-                     form.richTextBox1.Invoke(new del(() => form.richTextBox1.Text += $"{str} покидает магазин\n"));
+                    form.richTextBox1.Invoke(new del(() => form.richTextBox1.Text += $"{str} покидает магазин\n"));
 
-                     sem.Release();
+                    sem.Release();
 
-                     count--;
-                     Thread.Sleep(arrive_time);
+                    count--;
+                    Thread.Sleep(arrive_time);
                 }
             }
         }
